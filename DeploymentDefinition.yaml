@@ -14,4 +14,4 @@ spec:
         metadata:
             labels: {app: monster-ui}
         spec:
-            containers: [{name: monster-ui, image: 'nadpereira/relautimages', ports: [{containerPort: 4000}]}]
+            containers: [{name: monster-ui, image: 'index.docker.io/nadpereira/relautimages', ports: [{containerPort: 4000}]}]

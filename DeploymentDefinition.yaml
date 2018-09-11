@@ -6,7 +6,7 @@ apiVersion: apps/v1
     name: monster-ui-deployment
     namespace: ingress-nginx
   spec:
-    replicas: 3
+    replicas: 4
     selector:
       matchLabels:
         app: monster-ui
@@ -16,7 +16,7 @@ apiVersion: apps/v1
           app: monster-ui
       spec:
         containers:
-          - image: index.docker.io/nadpereira/relautimages
+          - image: nadpereira/relautimages
             name: monster-ui
             ports:
               - containerPort: 4000

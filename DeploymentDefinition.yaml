@@ -6,7 +6,7 @@ metadata:
         app: monster-ui
     namespace: ingress-nginx
 spec:
-    replicas: 4
+    replicas: 3
     selector:
         matchLabels:
             app: monster-ui

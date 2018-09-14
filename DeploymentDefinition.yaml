@@ -6,7 +6,7 @@ metadata:
         app: monster-ui
     namespace: ingress-nginx
 spec:
-    replicas: 2
+    replicas: 3
     selector:
         matchLabels:
             app: monster-ui
@@ -14,4 +14,42 @@ spec:
         metadata:
             labels: {app: monster-ui}
         spec:
-            containers: [{name: monster-ui, image: 'index.docker.io/nadpereira/relautimages', ports: [{containerPort: 4000}]}]
+            containers: [{name: monster-ui, image: 'nadpereira/relautimages:monster-ui', imagePullPolicy: Always,  ports: [{containerPort: 4000}]}]
+            imagePullSecrets: [{name: myregistrykey}]
+
+
+---
+
+apiVersion: v1
+kind: Service                                           
+metadata:
+  name: monster-ui-service                             
+  labels:
+    app: monster-ui-service
+    version: 1.0.0.0
+  namespace: ingress-nginx
+spec:                                                
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 4000
+  type: NodePort  #creates LoadBalancer
+  selector:
+    app: monster-ui
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: monster-ui-ingress
+  namespace: ingress-nginx
+spec:
+  rules:
+  - host: ui.resistance.mnstr.io
+    http:
+      paths:
+      - backend:
+          serviceName: monster-ui-service
+          servicePort: 80
